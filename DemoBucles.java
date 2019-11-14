@@ -1,3 +1,4 @@
+import java.util.Random;
 /**
  *    @author - 
  */
@@ -5,13 +6,13 @@ public class DemoBucles
 {
     private final char ASTERISCO = '*';
     private final char ESPACIO = ' ';
-
+    private Random generador;
     /**
      * Constructor  
      */
     public DemoBucles()
     {
-       
+        generador = new Random();
     }
 
     /**
@@ -26,8 +27,11 @@ public class DemoBucles
      *  Usa bucles while
      */
     public int mayorPotencia2(int numero) {
-        
-        return 0;
+        int sol = 1;
+        while(numero >= sol * 2){
+            sol *= 2;
+        }
+        return sol;
 
     }
 
@@ -47,8 +51,14 @@ public class DemoBucles
      *  64 =    64
      */
     public void escribirSumaPotencias(int numero) {
-
-         
+        int aux = numero;
+        int aux2 = 0;
+        System.out.printf("%6d =", aux);
+        while(aux > 0){
+            aux2 = mayorPotencia2(aux);
+            aux = aux - aux2;
+            System.out.printf("%6d", aux2);
+        }
 
     }
 
@@ -64,9 +74,17 @@ public class DemoBucles
      * 
      */
     public void generarAleatorios(int n) {
-
-       
-
+        int aleatorio = generador.nextInt(255);
+        int contador = 1;
+        borrarPantalla();
+        System.out.println("Nºs aleatorios como suma de potencias de 2");
+        while(aleatorio != 0 && contador <= n){
+            System.out.println();
+            escribirSumaPotencias(aleatorio);
+            aleatorio = generador.nextInt(255);
+            contador++;
+        }
+        System.out.println("\nBucle terminado porque se han generado ya " + n + " aleatorios");
     }
 
     /**
@@ -76,7 +94,11 @@ public class DemoBucles
      */
     public void escribirCaracter(int n, char caracter)
     {
-         
+        String dibujo = "";
+        for (int contador = 1; contador <= n; contador++){
+            dibujo += caracter;
+        }
+        System.out.println(dibujo);
     }
 
     /**
@@ -86,10 +108,31 @@ public class DemoBucles
      *   Usa bucles for
      */
     public  void mostrarEscalera(int escalones, int alto, int ancho) {
-        System.out.println();
+        int nEscalones = 1;
+        int nFilas = 1;
+        int escrito = 1;
+        int vacio = 1;
+        borrarPantalla();
+        for (nEscalones = 1; nEscalones <= escalones; nEscalones++){
+            System.out.println();
 
-         
+            for (nFilas = 1; nFilas <= alto; nFilas++){
 
+                for (escrito = 1; escrito <= alto; escrito++){
+                    escribirCaracter(ancho, ASTERISCO);
+                }
+                for (vacio = 1; vacio <= alto; vacio++){
+                       escribirCaracter(ancho, ESPACIO); 
+                    }
+            }
+        }
+
+    }
+    /**
+     * 
+     */
+    public void borrarPantalla() {
+        System.out.println("\u000c");
     }
 
 }
